@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -36,7 +38,10 @@ class MainController extends Controller
     }
     public function shop_page()
     {
-        return view('user.pages.shope');
+        $categories = Category::paginate(10);
+        $products = Product::with('category')->paginate(10);
+
+        return view('user.pages.shope' , compact('categories', 'products'));
     }
     public function single_news_page()
     {
